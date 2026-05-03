@@ -1,7 +1,6 @@
--- Nguyenduydz FLY + FPS FULL FINAL
+-- Nguyenduydz OLD FLY FIX (BAY ĐƯỢC + KHÔNG MẤT KHI CHẾT)
 
 local player = game.Players.LocalPlayer
-local UIS = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 
 -- ===== CHARACTER FIX =====
@@ -21,43 +20,43 @@ end)
 
 -- ===== GUI =====
 local gui = Instance.new("ScreenGui")
-gui.Name = "NguyenduydzFly"
+gui.Parent = player.PlayerGui
 gui.ResetOnSpawn = false
-gui.Parent = player:WaitForChild("PlayerGui")
 
 -- ===== FPS =====
-local fpsLabel = Instance.new("TextLabel")
-fpsLabel.Parent = gui
-fpsLabel.Size = UDim2.new(0,100,0,30)
-fpsLabel.Position = UDim2.new(0.8,0,0.02,0)
+local fps = Instance.new("TextLabel")
+fps.Parent = gui
+fps.Size = UDim2.new(0,100,0,30)
+fps.Position = UDim2.new(0.8,0,0.02,0)
 
-fpsLabel.BackgroundColor3 = Color3.fromRGB(25,25,25)
-fpsLabel.TextColor3 = Color3.new(1,1,1)
-fpsLabel.Text = "FPS: 0"
+fps.BackgroundColor3 = Color3.fromRGB(20,20,20)
+fps.TextColor3 = Color3.new(1,1,1)
 
-Instance.new("UICorner", fpsLabel)
+fps.Text = "FPS: 0"
+
+Instance.new("UICorner", fps)
 
 local frames = 0
 local last = tick()
 
--- ===== OPEN BUTTON =====
-local openBtn = Instance.new("TextButton")
-openBtn.Parent = gui
+-- ===== OPEN =====
+local open = Instance.new("TextButton")
+open.Parent = gui
 
-openBtn.Size = UDim2.new(0,100,0,35)
-openBtn.Position = UDim2.new(0.02,0,0.3,0)
+open.Size = UDim2.new(0,100,0,35)
+open.Position = UDim2.new(0.02,0,0.3,0)
 
-openBtn.Text = "Nguyenduydz"
+open.Text = "Nguyenduydz"
 
-openBtn.BackgroundColor3 = Color3.fromRGB(0,170,255)
-openBtn.TextColor3 = Color3.new(1,1,1)
+open.BackgroundColor3 = Color3.fromRGB(0,170,255)
+open.TextColor3 = Color3.new(1,1,1)
 
-openBtn.Active = true
-openBtn.Draggable = true
+open.Active = true
+open.Draggable = true
 
-Instance.new("UICorner", openBtn)
+Instance.new("UICorner", open)
 
--- ===== MENU =====
+-- ===== FRAME =====
 local frame = Instance.new("Frame")
 frame.Parent = gui
 
@@ -85,7 +84,7 @@ title.TextColor3 = Color3.new(1,1,1)
 
 title.TextScaled = true
 
--- ===== FLY BUTTON =====
+-- ===== FLY =====
 local flyBtn = Instance.new("TextButton")
 flyBtn.Parent = frame
 
@@ -94,25 +93,25 @@ flyBtn.Position = UDim2.new(0,5,0,35)
 
 flyBtn.Text = "Fly: OFF"
 
--- ===== SPEED + =====
+-- ===== PLUS =====
 local plus = Instance.new("TextButton")
 plus.Parent = frame
 
 plus.Size = UDim2.new(0.45,0,0,35)
 plus.Position = UDim2.new(0.05,0,0,80)
 
-plus.Text = "+ Speed"
+plus.Text = "+ Tốc độ"
 
--- ===== SPEED - =====
+-- ===== MINUS =====
 local minus = Instance.new("TextButton")
 minus.Parent = frame
 
 minus.Size = UDim2.new(0.45,0,0,35)
 minus.Position = UDim2.new(0.5,0,0,80)
 
-minus.Text = "- Speed"
+minus.Text = "- Tốc độ"
 
--- ===== SPEED LABEL =====
+-- ===== SPEED =====
 local speedLabel = Instance.new("TextLabel")
 speedLabel.Parent = frame
 
@@ -125,22 +124,22 @@ speedLabel.TextColor3 = Color3.new(1,1,1)
 speedLabel.Text = "Speed: 1"
 
 -- ===== UP =====
-local upBtn = Instance.new("TextButton")
-upBtn.Parent = frame
+local up = Instance.new("TextButton")
+up.Parent = frame
 
-upBtn.Size = UDim2.new(1,-10,0,35)
-upBtn.Position = UDim2.new(0,5,0,145)
+up.Size = UDim2.new(1,-10,0,35)
+up.Position = UDim2.new(0,5,0,145)
 
-upBtn.Text = "UP"
+up.Text = "UP"
 
 -- ===== DOWN =====
-local downBtn = Instance.new("TextButton")
-downBtn.Parent = frame
+local down = Instance.new("TextButton")
+down.Parent = frame
 
-downBtn.Size = UDim2.new(1,-10,0,35)
-downBtn.Position = UDim2.new(0,5,0,185)
+down.Size = UDim2.new(1,-10,0,35)
+down.Position = UDim2.new(0,5,0,185)
 
-downBtn.Text = "DOWN"
+down.Text = "DOWN"
 
 -- ===== STATES =====
 local flyOn = false
@@ -149,12 +148,12 @@ local speed = 1
 local upHold = false
 local downHold = false
 
--- ===== OPEN MENU =====
-openBtn.MouseButton1Click:Connect(function()
+-- ===== OPEN =====
+open.MouseButton1Click:Connect(function()
     frame.Visible = not frame.Visible
 end)
 
--- ===== FLY TOGGLE =====
+-- ===== FLY =====
 flyBtn.MouseButton1Click:Connect(function()
 
     flyOn = not flyOn
@@ -174,26 +173,26 @@ end)
 
 minus.MouseButton1Click:Connect(function()
 
-    speed = math.max(1, speed - 1)
+    speed = math.max(1,speed - 1)
 
     speedLabel.Text = "Speed: "..speed
 
 end)
 
 -- ===== HOLD =====
-upBtn.MouseButton1Down:Connect(function()
+up.MouseButton1Down:Connect(function()
     upHold = true
 end)
 
-upBtn.MouseButton1Up:Connect(function()
+up.MouseButton1Up:Connect(function()
     upHold = false
 end)
 
-downBtn.MouseButton1Down:Connect(function()
+down.MouseButton1Down:Connect(function()
     downHold = true
 end)
 
-downBtn.MouseButton1Up:Connect(function()
+down.MouseButton1Up:Connect(function()
     downHold = false
 end)
 
@@ -204,9 +203,12 @@ RunService.RenderStepped:Connect(function()
     frames += 1
 
     if tick() - last >= 1 then
-        fpsLabel.Text = "FPS: "..frames
+
+        fps.Text = "FPS: "..frames
+
         frames = 0
         last = tick()
+
     end
 
     -- FLY
@@ -217,37 +219,16 @@ RunService.RenderStepped:Connect(function()
 
     if not root then return end
 
-    local cam = workspace.CurrentCamera
-    local moveDirection = Vector3.zero
-
-    if UIS:IsKeyDown(Enum.KeyCode.W) then
-        moveDirection += cam.CFrame.LookVector
-    end
-
-    if UIS:IsKeyDown(Enum.KeyCode.S) then
-        moveDirection -= cam.CFrame.LookVector
-    end
-
-    if UIS:IsKeyDown(Enum.KeyCode.A) then
-        moveDirection -= cam.CFrame.RightVector
-    end
-
-    if UIS:IsKeyDown(Enum.KeyCode.D) then
-        moveDirection += cam.CFrame.RightVector
-    end
+    local move = Vector3.new()
 
     if upHold then
-        moveDirection += Vector3.new(0,1,0)
+        move += Vector3.new(0,speed,0)
     end
 
     if downHold then
-        moveDirection -= Vector3.new(0,1,0)
+        move -= Vector3.new(0,speed,0)
     end
 
-    if moveDirection.Magnitude > 0 then
-        root.Velocity = moveDirection.Unit * (speed * 25)
-    else
-        root.Velocity = Vector3.zero
-    end
+    root.Velocity = move
 
 end)
